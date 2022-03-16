@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -22,132 +23,62 @@
     document.getElementsByTagName('head')[0].appendChild(link);
   </script>
 </head>
+
 <body>
-<div class="reveal">
-  <div class="slides">
-    <section class="deck-slide">
-      <h1>Testing React <br/> <span style="font-size: 45px;">- why, when and how</span></h1>
-    </section>
-    <section>
-      <section>
-        <h2>Should I test my client code?</h2>
+  <div class="reveal">
+    <div class="slides">
+      <section class="deck-slide">
+        <h1>Testing React <br /> <span style="font-size: 45px;">- why, when and how</span></h1>
       </section>
       <section>
-        <p><i>"I <strong>don't</strong> write tests for the client because it changes too often."</i></p>
-        <p>🤔</p>
+        <section>
+          <h2>Should I test my client code?</h2>
+        </section>
+        <section>
+          <p><i>"I <strong>don't</strong> write tests for the client code because it changes too often."</i></p>
+          <p>🤔</p>
+        </section>
+        <section>
+          <p><i>"I <strong>do</strong> write tests for the client code because it changes so often."</i></p>
+          <p class="fragment"><i>"I write tests in such a way that I can make changes without breaking tests."</i></p>
+        </section>
       </section>
       <section>
-        <p><i>"I <strong>do</strong> write tests for the client because it changes so often."</i></p>
-        <p class="fragment"><i>"I write tests in such a way that I can make changes without breaking tests."</i></p>
-      </section>
-    </section>
-    <section>
-      <section>
-        <h2>Testing libraries</h2>
-        <p><span class="code">jest</span> && (<span class="code">enzyme</span> || <span class="code">react-testing-library</span>)
-        </p>
-      </section>
-      <section>
-        <h2>Enzyme</h2>
-        <p>Allows accessing and modifying <span class="code">state</span>, accessing the components methods directly,
-          and gives you <span
-              class="code">shallow()</span> rendering</p>
-      </section>
-      <section>
-        <h2>Shallow Rendering</h2>
-        <pre>
-<code class="hljs html" data-trim contenteditable data-noescape>
-    // App.js
-    &lt;div&gt;
-      &lt;ProductList
-          products={products}
-          addProduct={product =&gt; addToShoppingCart(product)}
-      /&gt;
-      &lt;ShoppingCart
-          items={shoppingCart}
-          removeItem={item =&gt; removeFromShoppingCart(item)}
-      /&gt;
-    &lt;/div&gt;
-</code>
-</pre>
-      </section>
-      <section>
-        <h2>Shallow Rendering</h2>
-        <pre>
-<code class="hljs html" data-trim contenteditable data-noescape>
-    // shallow(&lt;App /&gt;)
-    &lt;div&gt;
-        &lt;ProductList
-              products={{...}}
-              addProduct={[Function: addProduct]}
-        /&gt;
-        &lt;ShoppingCart
-              items={{...}}
-              removeItem={[Function: removeItem]}
-        /&gt;
-    &lt;/div&gt;
-</code>
-</pre>
-      </section>
-      <section>
-        <pre>
-<code class="hljs html" data-trim contenteditable data-noescape>
-// ProductList.js
-&lt;div&gt;
-  {products.map(product =&gt; (
-    &lt;div key={product}&gt;
-      &lt;span&gt;{product}&lt;/span&gt;
-      &lt;button
-        className="add"
-        onClick={() =&gt; onAddProduct(product)}
-       &gt;Add
-      &lt;/button&gt;
-    &lt;/div&gt;
-  ))}
-&lt;/div&gt;
-</code>
-</pre>
-      </section>
-      <section>
-        <pre>
-<code class="hljs js" data-trim contenteditable data-noescape>
-// ProductList.test.js
-it('should call addProduct when add is clicked', () => {
-  wrapper
-    .find('.add')
-    .first()
-    .simulate('click');
-  expect(
-    props.addProduct
-  ).toHaveBeenCalledWith('Tomato');
-});
-</code>
-</pre>
-      </section>
-      <section>
-        <pre>
-<code class="hljs html" data-trim contenteditable data-noescape>
-// ProductList.js
-&lt;div&gt;
-  {products.map(product =&gt; (
-    &lt;ListItem product={product} /&gt;
-  ))}
-&lt;/div&gt;
-</code>
-</pre>
-        <p>The test will break, although the functionality is still the same.</p>
-      </section>
-      <section>
-        <h2>React Testing Library</h2>
-        <p>Forces you to write tests closer to the way the user interacts with the application.</p>
-        <ul>
-          <li>No access to the state of the components</li>
-          <li>No shallow rendering</li>
-          <li>Testing closer to the DOM</li>
-        </ul>
-      </section>
-      <section>
-        <pre>
+        <section>
+          <h2>Testing React</h2>
+          <p><span class="code">jest</span> && <span class="code">react-testing-library</span>
+          </p>
+        </section>
+        <section>
+          <h2>React Testing Library</h2>
+          <p>Forces you to write tests close to the way the user interacts with the application.</p>
+          <ul>
+            <li>No access to the inner state of the components</li>
+            <li>Testing closer to the DOM</li>
+            <li>"No" selection by class</li>
+          </ul>
+        </section>
+        <section>
+          <pre>
+  <code class="hljs html" data-trim contenteditable data-noescape>
+  // ProductList.js
+  &lt;div&gt;
+    {products.map(product =&gt; (
+      &lt;div key={product}&gt;
+        &lt;span&gt;{product}&lt;/span&gt;
+        &lt;button
+          className="add"
+          onClick={() =&gt; onAddProduct(product)}
+         &gt;Add
+        &lt;/button&gt;
+      &lt;/div&gt;
+    ))}
+  &lt;/div&gt;
+  </code>
+  </pre>
+        </section>
+        <section>
+          <pre>
 <code class="hljs js" data-trim contenteditable data-noescape>
 // ProductList.test.js
 describe('when user adds a product', () =&gt; {
@@ -156,7 +87,7 @@ describe('when user adds a product', () =&gt; {
       render(&lt;ProductList {...props}/&gt;);
 
     fireEvent.click(
-      productList.getAllByTestId('add-product')[0]
+      productList.getAllByLabelText('Add')[0];
     );
 
     expect(onAddProduct).toHaveBeenCalledWith('Tomato');
@@ -164,50 +95,52 @@ describe('when user adds a product', () =&gt; {
 });
 </code>
 </pre>
-      <p>But what are we actually testing?</p>
-      </section>
-      <section>
-        <pre>
+          <p>But what are we actually testing?</p>
+        </section>
+        <section>
+          <pre>
 <code class="hljs js" data-trim contenteditable data-noescape>
 // App.test.js
 it('should add the product to the cart', () =&gt; {
   const app = render(&lt;App/&gt;);
-  fireEvent.click(app.queryAllByTestId('add-product')[0]);
+  fireEvent.click(app.getAllByLabelText('Add')[0]);
   const cartItems = app.queryAllByTestId('cart-item');
   expect(cartItems.length).toBe(1);
 });
 </code>
 </pre>
-      <p>Edge cases can still be tested in each component</p>
+          <p>Edge cases can still be tested in each component</p>
+        </section>
+        <section>
+          <h2>Testing principles</h2>
+          <p>The more your tests resemble the way your software is used, the more confidence they can give you.</p>
+          <p>Test what the <strong>user</strong> sees, not implementation details</p>
+          <p>Testing every component as a unit will make it harder to refactor later</p>
+        </section>
       </section>
-      <section>
-        <h2>Testing principles</h2>
-        <p>Test what the <strong>user</strong> sees, not implementation details</p>
-        <p>Testing every component as a unit will make it harder to refactor later</p>
-      </section>
-    </section>
+    </div>
   </div>
-</div>
-<script src="../lib/js/head.min.js"></script>
-<script src="../js/reveal.js"></script>
+  <script src="../lib/js/head.min.js"></script>
+  <script src="../js/reveal.js"></script>
 
-<script>
-  // More info https://github.com/hakimel/reveal.js#configuration
-  Reveal.initialize({
-    history: true,
+  <script>
+    // More info https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+      history: true,
 
-    // More info https://github.com/hakimel/reveal.js#dependencies
-    dependencies: [
-      { src: '../plugin/markdown/marked.js' },
-      { src: '../plugin/markdown/markdown.js' },
-      { src: '../plugin/notes/notes.js', async: true },
-      {
-        src: '../plugin/highlight/highlight.js', async: true, callback: function () {
-          hljs.initHighlightingOnLoad();
+      // More info https://github.com/hakimel/reveal.js#dependencies
+      dependencies: [
+        { src: '../plugin/markdown/marked.js' },
+        { src: '../plugin/markdown/markdown.js' },
+        { src: '../plugin/notes/notes.js', async: true },
+        {
+          src: '../plugin/highlight/highlight.js', async: true, callback: function () {
+            hljs.initHighlightingOnLoad();
+          }
         }
-      }
-    ]
-  });
-</script>
+      ]
+    });
+  </script>
 </body>
+
 </html>
