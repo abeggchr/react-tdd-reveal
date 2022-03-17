@@ -22,14 +22,6 @@ Changes / comments to the slides:
 
 ### What is TDD?
 
-Mention the three rules:
-
-1. Write no more of a unit test than sufficient to fail (compilation failures are failures).
-1. Write no more production code than necessary to pass the one failing unit test.
-1. Write production code only to pass a failing unit test.
-
-### Testing React
-
 Mention storybook
 
 ## Hands On
@@ -48,17 +40,30 @@ Steps:
 - Implement:
 - Show title
 - Shows empty cart
-- Products list -> ugly: products array in App
-- Refactor: refactor component
-- Refactor: data > as props -> Shop component
-- Add
+- Products list in app -> ugly: products array in App
+- Refactor: refactor component to take props
+- Skip: Refactor: data > as props (refactor to Shop component)
+- Adds item to cart functionality
+- Refactor to Shop
 
-Challenges:
+Extension:
+- Tomato is multiple times on the Shop after adding it to the cart -> how to test?
+  - appears twice -> ok
+  - appears in cart:   const cart = screen.getByTestId("cart"); getByTestId(cart, "Test");
+
+Challenges with TDD:
 
 - how fine grained?
-- when to extract components? -> Product
+  - test title or not?
+  - how big of a step are you taking?
+- when to extract components?
+  - saw it with ProductList, Shop
 - how to load (test) data?
-- Tomato is multiple times on the Shop after adding it to the cart -> how to test?
+  - as props
+  - in store
+  - fake backend
+- structuring
+  - show describe (what) / describe (state, render) / test
 
 ## Discussion
 
@@ -67,6 +72,8 @@ Challenges:
 Redux examples:
 
 - connected [cha](https://trassee-4.zuehlke.com/tfs/Project_c13774/FA%20Trassee/_git/FA%20Trassee%20Sources?version=GBmaster&path=%2FSources%2FTra%2FMistra.Tra.Web.React%2Fsrc%2Fpages%2Fnormen%2Fcomponents%2FNormenPage.test.tsx)
+-> 111, redux state
+-> 52, mocked backedn
 - container component [nipa]
 
 ## Impact on your work

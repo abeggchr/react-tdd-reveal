@@ -82,14 +82,9 @@
 <code class="hljs js" data-trim contenteditable data-noescape>
 // ProductList.test.js
 describe('when user adds a product', () =&gt; {
-  it('should call addProduct', () =&gt; {
-    const productList =
-      render(&lt;ProductList {...props}/&gt;);
-
-    fireEvent.click(
-      productList.getAllByLabelText('Add')[0];
-    );
-
+  test('should call addProduct', () =&gt; {
+    render(&lt;ProductList {...props}/&gt;);
+    screen.getAllByLabelText('Add')[0].click();
     expect(onAddProduct).toHaveBeenCalledWith('Tomato');
   });
 });
@@ -101,10 +96,10 @@ describe('when user adds a product', () =&gt; {
           <pre>
 <code class="hljs js" data-trim contenteditable data-noescape>
 // App.test.js
-it('should add the product to the cart', () =&gt; {
-  const app = render(&lt;App/&gt;);
-  fireEvent.click(app.getAllByLabelText('Add')[0]);
-  const cartItems = app.queryAllByTestId('cart-item');
+test('should add the product to the cart', () =&gt; {
+  render(&lt;App/&gt;);
+  screen.getAllByLabelText('Add')[0].click();
+  const cartItems = screen.queryAllByTestId('cart-item');
   expect(cartItems.length).toBe(1);
 });
 </code>
